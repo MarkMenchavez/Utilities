@@ -5,8 +5,9 @@ install:
  - dotnet tool install --global dotnet-sonarscanner
 before_build:
  - nuget restore
- - dotnet sonarscanner begin /k:"MarkMenchavez_Utilities" /d:"sonar.host.url=https://sonarcloud.io" /o:"markmenchavez" /d:sonar.login="110896645303739d9fae44092d397ac35d29bd08" /v:1.0.{build}
+ - dotnet sonarscanner begin /k:"MarkMenchavez_Utilities" /d:"sonar.host.url=https://sonarcloud.io" /o:"markmenchavez" /d:sonar.login="110896645303739d9fae44092d397ac35d29bd08" /v:1.0
 build_script:
- - dotnet build Utilities.sln
+ - dotnet build Utilities.sln -c Release 
+ - dotnet test Utilities.sln -c Release
 after_build:
  - dotnet sonarscanner end /d:sonar.login="110896645303739d9fae44092d397ac35d29bd08"
