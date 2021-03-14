@@ -1,9 +1,11 @@
 version: 1.0.{build}
 image: Visual Studio 2019
+install:
+ - dotnet tool install --global dotnet-sonarscanner
 before_build:
  - nuget restore
+ - dotnet sonarscanner begin /k:"MarkMenchavez_Utilities" /d:"sonar.host.url=https://sonarcloud.io" /o:"markmenchavez" /d:sonar.login="110896645303739d9fae44092d397ac35d29bd08" /v:1.0.{build}
 build_script:
- - choco install "sonarscanner-msbuild-net50" -y
- - SonarScanner.MSBuild.exe begin /k:"MarkMenchavez_Utilities" /d:"sonar.host.url=https://sonarcloud.io" /o:"markmenchavez" /d:"sonar.login=110896645303739d9fae44092d397ac35d29bd08" /v:1.0.{build}
- - msbuild /verbosity:quiet "Utilities.sln" /t:Rebuild
- - SonarScanner.MSBuild.exe end /d:"sonar.login=110896645303739d9fae44092d397ac35d29bd08"
+ - dotnet build Utilities.sln
+on_finish:
+ - dotnet sonarscanner end /d:sonar.login="110896645303739d9fae44092d397ac35d29bd08"
