@@ -2,5 +2,8 @@ version: 1.0.{build}
 image: Visual Studio 2019
 before_build:
  - nuget restore
-build:
-  verbosity: minimal
+build_script:
+ - choco install "sonarscanner-msbuild-net50" -y
+ - SonarScanner.MSBuild.exe begin /k:"MarkMenchavez_Utilities" /d:"sonar.host.url=https://sonarcloud.io" /o:"markmenchavez" /d:"sonar.login=110896645303739d9fae44092d397ac35d29bd08" /v:1.0.{build}
+ - msbuild /verbosity:quiet "Utilities.sln" /t:Rebuild
+ - SonarScanner.MSBuild.exe end /d:"sonar.login=110896645303739d9fae44092d397ac35d29bd08"
