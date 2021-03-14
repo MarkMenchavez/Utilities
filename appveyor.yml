@@ -1,6 +1,7 @@
 version: 1.0.{build}
 image: Visual Studio 2019
 install:
+ - ps: $env:JAVA_HOME="C:\Program Files\Java\jdk11"
  - dotnet tool install --global dotnet-sonarscanner
 before_build:
  - nuget restore
