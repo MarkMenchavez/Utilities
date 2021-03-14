@@ -7,5 +7,5 @@ before_build:
  - dotnet sonarscanner begin /k:"MarkMenchavez_Utilities" /d:"sonar.host.url=https://sonarcloud.io" /o:"markmenchavez" /d:sonar.login="110896645303739d9fae44092d397ac35d29bd08" /v:1.0.{build}
 build_script:
  - dotnet build Utilities.sln
-on_finish:
+after_build:
  - dotnet sonarscanner end /d:sonar.login="110896645303739d9fae44092d397ac35d29bd08"
